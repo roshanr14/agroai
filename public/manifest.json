@@ -1,0 +1,18 @@
+{
+  "short_name": "AgriSense",
+  "name": "AgriSense AI — Multi-Agent Intelligent Agriculture",
+  "description": "AI-powered agricultural intelligence for Indian farmers with simulated sensors, multi-agent reasoning, and SMS alerts.",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0c1b12",
+  "theme_color": "#184e2d",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en"
+}
