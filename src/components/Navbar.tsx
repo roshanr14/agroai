@@ -97,11 +97,11 @@ export const Navbar: React.FC<Props> = ({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-xl text-stone-900 tracking-tight">
-                  agrisense<span className="text-[#279e5a]">.ai</span>
+                <span className="font-serif font-black text-2xl text-stone-900 tracking-tight">
+                  AGRO<span className="text-[#279e5a]">AI</span>
                 </span>
-                <span className="hidden sm:inline-block text-[11px] font-mono lowercase bg-[#eaf7ef] text-[#279e5a] border border-[#c1e8cd] px-2 py-0.5 rounded-full font-semibold">
-                  greenery platform
+                <span className="hidden sm:inline-block text-[11px] font-mono uppercase bg-[#eaf7ef] text-[#279e5a] border border-[#c1e8cd] px-2.5 py-0.5 rounded-full font-bold">
+                  Platform
                 </span>
               </div>
             </div>

@@ -146,8 +146,8 @@ export const DashboardPage: React.FC<Props> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Sprout className="w-5 h-5 text-white" />
-                <span className="text-xs font-semibold tracking-wide lowercase text-white/90">
-                  agrisense intelligence
+                <span className="text-xs font-bold tracking-wider uppercase text-white font-mono">
+                  AGROAI Intelligence
                 </span>
               </div>
               <span className="text-[10px] font-mono uppercase bg-white/20 px-2.5 py-0.5 rounded-full font-bold">

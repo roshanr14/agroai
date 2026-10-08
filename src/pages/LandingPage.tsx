@@ -79,13 +79,18 @@ export const LandingPage: React.FC<Props> = ({ language, readings, onOpenSimulat
             {/* Top pill badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold tracking-wide border border-white/25">
               <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-              MULTI-AGENT INTELLIGENT AGRICULTURE PLATFORM
+              AGROAI • MULTI-AGENT PLATFORM
             </div>
 
-            {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15]">
-              {t.landingTitle}
-            </h1>
+            {/* Brand Title: AGROAI */}
+            <div className="space-y-3">
+              <div className="text-2xl sm:text-3xl font-mono uppercase tracking-[0.3em] text-white font-extrabold">
+                AGROAI
+              </div>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.15]">
+                {t.landingTitle}
+              </h1>
+            </div>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-white/90 font-normal leading-relaxed max-w-2xl mx-auto">
