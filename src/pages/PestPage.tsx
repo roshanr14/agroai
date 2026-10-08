@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { 
   Bug, 
   Upload, 
-  Camera, 
   CheckCircle2, 
   AlertTriangle, 
   ShieldAlert, 
-  Sparkles, 
   Cpu, 
   Info,
-  RefreshCw,
-  Eye
+  RefreshCw
 } from 'lucide-react';
 import { Language, PestAnalysis, SensorReadings, FarmerProfile } from '../types';
 import { getTranslation } from '../lib/i18n';
@@ -90,7 +87,6 @@ export const PestPage: React.FC<Props> = ({
       const reader = new FileReader();
       reader.onload = (event) => {
         setUploadedPreview(event.target?.result as string);
-        // Run diagnosis on uploaded leaf
         handleSelectSample('early_blight');
       };
       reader.readAsDataURL(file);
@@ -103,10 +99,10 @@ export const PestPage: React.FC<Props> = ({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="p-1.5 rounded-lg bg-purple-100 text-purple-800">
+            <span className="p-1.5 rounded-lg bg-[#eaf7ef] text-[#279e5a]">
               <Bug className="w-4 h-4" />
             </span>
-            <span className="text-xs uppercase font-mono text-purple-800 font-bold tracking-wider">
+            <span className="text-xs uppercase font-mono text-[#279e5a] font-bold tracking-wider">
               PEST & FOLIAR INTELLIGENCE AGENT (AGENT 03)
             </span>
           </div>
@@ -119,35 +115,36 @@ export const PestPage: React.FC<Props> = ({
         </div>
 
         {/* Model info badge */}
-        <div className="flex items-center gap-2 bg-stone-900 text-stone-200 px-3.5 py-1.5 rounded-xl border border-stone-800 text-xs">
-          <Cpu className="w-4 h-4 text-purple-400" />
+        <div className="flex items-center gap-2 bg-white text-stone-800 px-4 py-2 rounded-full border border-stone-200 text-xs font-semibold shadow-xs">
+          <Cpu className="w-4 h-4 text-[#279e5a]" />
           <span className="font-mono">{analysis.model_used}</span>
         </div>
       </div>
 
-      {/* Mandatory Transparency Notice Badge */}
-      <div className="p-4 rounded-2xl bg-stone-900 text-stone-200 border border-purple-900/60 flex items-start gap-3 shadow-md">
-        <Info className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+      {/* Transparency Notice Badge */}
+      <div className="p-5 rounded-[28px] bg-white border border-[#279e5a]/30 shadow-xs flex items-start gap-3.5">
+        <div className="p-2.5 rounded-2xl bg-[#eaf7ef] text-[#279e5a] shrink-0">
+          <Info className="w-5 h-5" />
+        </div>
         <div className="text-xs space-y-1">
-          <div className="font-semibold text-purple-300">
+          <div className="font-bold text-stone-900">
             AI TRANSPARENCY NOTICE (PROTOTYPE SIMULATION MODE)
           </div>
-          <p className="text-stone-300 leading-relaxed">
+          <p className="text-stone-600 leading-relaxed">
             {analysis.transparency_notice} All detections are cross-referenced with current environmental microclimate indicators (Humidity {readings.humidity}%, Ambient Temp {readings.temperature}°C).
           </p>
         </div>
       </div>
 
-      {/* Main Grid: Upload & Scanning (Left) + Diagnostics & Control (Right) */}
+      {/* Main Grid: Upload & Scanning + Diagnostics */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Column: Image Input & Curated Demo Samples */}
         <div className="lg:col-span-5 space-y-6">
-          {/* Upload / Camera Card */}
-          <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-sm space-y-4">
+          <div className="bg-white rounded-[32px] border border-stone-200/80 p-7 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.07)] space-y-4">
             <h3 className="font-bold text-stone-900 text-base">Crop Foliage Scanner</h3>
 
             {/* Upload Dropzone */}
-            <div className="border-2 border-dashed border-stone-300 hover:border-emerald-500 rounded-2xl p-6 text-center space-y-3 transition-colors relative bg-stone-50/50">
+            <div className="border-2 border-dashed border-stone-300 hover:border-[#279e5a] rounded-2xl p-6 text-center space-y-3 transition-colors relative bg-[#f9faf9]">
               <input
                 type="file"
                 accept="image/*"
@@ -163,14 +160,14 @@ export const PestPage: React.FC<Props> = ({
                     alt="Uploaded leaf"
                     className="max-h-48 mx-auto rounded-xl object-cover border border-stone-300 shadow-sm"
                   />
-                  <div className="text-xs font-semibold text-emerald-800 flex items-center justify-center gap-1">
+                  <div className="text-xs font-semibold text-[#279e5a] flex items-center justify-center gap-1">
                     <CheckCircle2 className="w-4 h-4" />
                     <span>Leaf scan loaded. Click to replace.</span>
                   </div>
                 </div>
               ) : (
                 <>
-                  <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-800 mx-auto flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-[#eaf7ef] text-[#279e5a] mx-auto flex items-center justify-center">
                     <Upload className="w-6 h-6" />
                   </div>
                   <div>
@@ -196,9 +193,9 @@ export const PestPage: React.FC<Props> = ({
                   <button
                     key={sample.key}
                     onClick={() => handleSelectSample(sample.key)}
-                    className={`w-full p-3 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer ${
+                    className={`w-full p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer ${
                       selectedPresetKey === sample.key
-                        ? 'bg-purple-50 border-purple-500 shadow-sm'
+                        ? 'bg-[#eaf7ef] border-[#279e5a] shadow-xs'
                         : 'bg-stone-50/80 border-stone-200/80 hover:bg-stone-100'
                     }`}
                   >
@@ -210,8 +207,8 @@ export const PestPage: React.FC<Props> = ({
                       </div>
                     </div>
 
-                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
-                      sample.badge === 'Optimal' ? 'bg-emerald-100 text-emerald-800' :
+                    <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full ${
+                      sample.badge === 'Optimal' ? 'bg-[#c1e8cd] text-[#166436]' :
                       sample.badge === 'Critical' ? 'bg-rose-100 text-rose-800' :
                       'bg-amber-100 text-amber-800'
                     }`}>
@@ -224,9 +221,9 @@ export const PestPage: React.FC<Props> = ({
           </div>
         </div>
 
-        {/* Right Column: AI Diagnostics & Integrated Pest Management (IPM) */}
+        {/* Right Column: AI Diagnostics & IPM */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-7 shadow-sm space-y-6">
+          <div className="bg-white rounded-[32px] border border-stone-200/80 p-7 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.07)] space-y-6">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-stone-900 text-base sm:text-lg">
@@ -238,38 +235,38 @@ export const PestPage: React.FC<Props> = ({
               </div>
 
               {analyzing && (
-                <div className="flex items-center gap-1.5 text-xs text-purple-700 font-medium">
+                <div className="flex items-center gap-1.5 text-xs text-[#279e5a] font-semibold">
                   <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                   <span>Scanning...</span>
                 </div>
               )}
             </div>
 
-            {/* Condition Banner */}
-            <div className={`p-5 rounded-2xl border space-y-3 ${
+            {/* Condition Banner in Greenery or Warning style */}
+            <div className={`p-6 rounded-[28px] border space-y-3.5 ${
               analysis.is_healthy
-                ? 'bg-emerald-50/80 border-emerald-200 text-emerald-950'
-                : 'bg-purple-50/80 border-purple-200 text-purple-950'
+                ? 'bg-[#eaf7ef] border-[#c1e8cd] text-[#166436]'
+                : 'bg-stone-50 border-stone-200 text-stone-900'
             }`}>
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-purple-800 bg-purple-200/70 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-mono uppercase font-bold tracking-wider text-[#166436] bg-[#c1e8cd] px-3 py-1 rounded-full">
                     {analysis.category}
                   </span>
-                  <h4 className="text-lg sm:text-xl font-bold mt-1 text-stone-900">
+                  <h4 className="text-xl sm:text-2xl font-serif font-bold mt-2 text-stone-900">
                     {analysis.detected_condition}
                   </h4>
                 </div>
 
                 <div className="text-right">
                   <div className="text-xs text-stone-500 font-medium">AI Confidence</div>
-                  <div className="text-2xl font-bold font-mono text-purple-800">
+                  <div className="text-2xl font-bold font-mono text-[#279e5a]">
                     {analysis.confidence_percentage}%
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-purple-200/60 text-xs">
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-stone-200 text-xs">
                 <div>
                   <span className="text-stone-500">Severity: </span>
                   <strong className="text-stone-900">{analysis.severity}</strong>
@@ -288,17 +285,17 @@ export const PestPage: React.FC<Props> = ({
               <label className="text-xs font-bold text-stone-500 uppercase tracking-wider block">
                 Visual Symptoms Detected
               </label>
-              <p className="text-xs text-stone-700 bg-stone-50 p-3 rounded-xl border border-stone-200/80 leading-relaxed">
+              <p className="text-xs text-stone-700 bg-stone-50 p-4 rounded-2xl border border-stone-200/80 leading-relaxed">
                 {analysis.symptoms}
               </p>
             </div>
 
-            {/* Immediate Action */}
+            {/* Immediate Action with Contrast CTA badge */}
             <div className="space-y-1">
               <label className="text-xs font-bold text-stone-500 uppercase tracking-wider block">
                 Immediate Action Required
               </label>
-              <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200/80 text-xs text-amber-950 font-medium flex items-start gap-2">
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs text-amber-950 font-medium flex items-start gap-2.5">
                 <AlertTriangle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
                 <span>{analysis.immediate_action}</span>
               </div>
@@ -309,13 +306,13 @@ export const PestPage: React.FC<Props> = ({
               <label className="text-xs font-bold text-stone-500 uppercase tracking-wider block">
                 Safe Botanical & IPM Recommendations
               </label>
-              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200/80 text-xs text-emerald-950 leading-relaxed">
+              <div className="p-4 rounded-2xl bg-[#eaf7ef] border border-[#c1e8cd] text-xs text-[#166436] leading-relaxed">
                 {analysis.recommended_control}
               </div>
             </div>
 
-            {/* Officer Warning */}
-            <div className="text-[11px] text-stone-500 bg-stone-100 p-3 rounded-xl border border-stone-200 leading-relaxed flex items-start gap-2">
+            {/* Field Safety Notice */}
+            <div className="text-[11px] text-stone-500 bg-stone-100 p-3.5 rounded-2xl border border-stone-200 leading-relaxed flex items-start gap-2.5">
               <ShieldAlert className="w-4 h-4 text-stone-400 shrink-0 mt-0.5" />
               <span>
                 <strong>Field Safety Notice:</strong> Do not apply unapproved chemical pesticides. If insect infestation exceeds threshold (&gt;15 hoppers/plant), submit a sample to your block Agricultural Officer.

@@ -4,24 +4,22 @@
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-heading: 'Outfit', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     
-    /* Neofuturistic Agricultural Palette */
-    --color-agro-dark: #0c1b12;
-    --color-agro-primary: #184e2d;
-    --color-agro-accent: #22c55e;
-    --color-agro-light: #f4f7f4;
-    --color-agro-surface: #ffffff;
-    --color-agro-border: #e2e8e3;
-    --color-agro-earth: #8c5e32;
-    --color-agro-warning: #eab308;
-    --color-agro-danger: #ef4444;
+    /* Greenery Theme Colors (from reference UI) */
+    --color-greenery-primary: #279e5a;
+    --color-greenery-hover: #1f8249;
+    --color-greenery-light: #eaf7ef;
+    --color-greenery-dark: #166436;
+    --color-contrast-cta: #191c21;
+    --color-contrast-cta-hover: #0d0f12;
+    --color-surface-card: #ffffff;
+    --color-canvas-bg: #e9edf0;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #f7faf7;
-    color: #172a1e;
+    background-color: #e9edf0;
+    color: #191c21;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -29,43 +27,84 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom agricultural scrollbars */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #edf3ed;
+    background: #e2e8ec;
   }
   ::-webkit-scrollbar-thumb {
-    background: #9ebb9e;
-    border-radius: 3px;
+    background: #a3b8aa;
+    border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #477947;
+    background: #279e5a;
   }
 }
 
-/* Subtle Technical Hairlines & Neofuturistic Touches */
-.agro-glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(22, 101, 52, 0.12);
+/* Greenery Design System Custom Utility Classes */
+.bg-greenery-primary {
+  background-color: #279e5a;
 }
 
-.agro-glass-dark {
-  background: rgba(14, 28, 19, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+.text-greenery-primary {
+  color: #279e5a;
 }
 
-.agro-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(24, 78, 45, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(24, 78, 45, 0.05) 1px, transparent 1px);
+.border-greenery-primary {
+  border-color: #279e5a;
+}
+
+.bg-contrast-cta {
+  background-color: #191c21;
+}
+
+.hover\:bg-contrast-cta-hover:hover {
+  background-color: #0d0f12;
+}
+
+/* Card elevation matching mockup */
+.greenery-card {
+  background-color: #ffffff;
+  border-radius: 32px;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.07);
+}
+
+.greenery-card-green {
+  background-color: #279e5a;
+  border-radius: 32px;
+  box-shadow: 0 20px 48px -12px rgba(39, 158, 90, 0.35);
+  color: #ffffff;
+}
+
+/* Pill buttons on green cards */
+.greenery-pill-btn {
+  background-color: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  border-radius: 9999px;
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+.greenery-pill-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Contrast CTA button from mockup (rounded corner pill) */
+.greenery-cta-btn {
+  background-color: #191c21;
+  color: #ffffff;
+  border-radius: 20px 0px 32px 20px;
+  padding: 14px 24px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+.greenery-cta-btn:hover {
+  background-color: #000000;
+  transform: translateY(-1px);
 }
 
 .pulse-dot {

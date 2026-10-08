@@ -3,18 +3,15 @@ import {
   Bell, 
   Smartphone, 
   CheckCircle, 
-  AlertTriangle, 
   ShieldCheck, 
   Clock, 
   Send, 
   CloudRain, 
   Sprout, 
-  Bug, 
-  Droplet 
+  Bug
 } from 'lucide-react';
 import { Language, NotificationLog, FarmerProfile, SensorReadings } from '../types';
 import { getTranslation } from '../lib/i18n';
-import { apiService } from '../services/api';
 
 interface Props {
   language: Language;
@@ -41,7 +38,7 @@ export const AlertsPage: React.FC<Props> = ({
     {
       category: "Soil Alert",
       icon: Sprout,
-      color: "text-amber-800 bg-amber-100",
+      color: "text-[#279e5a] bg-[#eaf7ef]",
       title: "Nitrogen level entering marginal threshold",
       desc: "Your soil nitrogen reading is 38 mg/kg, below the 40 mg/kg benchmark for vegetative stage tomato growth.",
       action: "Review nitrogen management within 2-3 days",
@@ -50,7 +47,7 @@ export const AlertsPage: React.FC<Props> = ({
     {
       category: "Weather Alert",
       icon: CloudRain,
-      color: "text-sky-800 bg-sky-100",
+      color: "text-sky-700 bg-sky-100",
       title: "Rain expected in Coimbatore (72% probability)",
       desc: "Scattered showers predicted within 24 hours. Hold drip irrigation to prevent root asphyxiation.",
       action: "Postpone irrigation valves for 24h",
@@ -59,7 +56,7 @@ export const AlertsPage: React.FC<Props> = ({
     {
       category: "Pest Watch",
       icon: Bug,
-      color: "text-purple-800 bg-purple-100",
+      color: "text-purple-700 bg-purple-100",
       title: "Humid microclimate favorable for early blight",
       desc: "Ambient humidity is 68% with canopy temperature 31°C. Inspect lower leaves across block 2.",
       action: "Inspect lower foliage before sunset",
@@ -94,10 +91,10 @@ export const AlertsPage: React.FC<Props> = ({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="p-1.5 rounded-lg bg-amber-100 text-amber-800">
+            <span className="p-1.5 rounded-lg bg-[#eaf7ef] text-[#279e5a]">
               <Bell className="w-4 h-4" />
             </span>
-            <span className="text-xs uppercase font-mono text-amber-800 font-bold tracking-wider">
+            <span className="text-xs uppercase font-mono text-[#279e5a] font-bold tracking-wider">
               NOTIFICATION & GSM SMS DISPATCH
             </span>
           </div>
@@ -110,55 +107,55 @@ export const AlertsPage: React.FC<Props> = ({
         </div>
 
         {/* Verification Pill */}
-        <div className="flex items-center gap-2 bg-emerald-50 text-emerald-800 px-3.5 py-1.5 rounded-xl border border-emerald-200 text-xs font-medium">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+        <div className="flex items-center gap-2 bg-[#eaf7ef] text-[#166436] px-4 py-2 rounded-full border border-[#c1e8cd] text-xs font-semibold">
+          <ShieldCheck className="w-4 h-4 text-[#279e5a]" />
           <span>GSM Phone Verified: {profile.phoneNumber}</span>
         </div>
       </div>
 
-      {/* Verified Phone Card */}
-      <div className="bg-stone-900 text-stone-100 p-6 rounded-3xl border border-stone-800 shadow-md space-y-4">
+      {/* Verified Phone Card in lush greenery green */}
+      <div className="bg-[#279e5a] text-white p-7 rounded-[32px] shadow-[0_20px_48px_-12px_rgba(39,158,90,0.35)] space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-emerald-950 text-emerald-400 border border-emerald-800">
-              <Smartphone className="w-6 h-6" />
+          <div className="flex items-center gap-3.5">
+            <div className="p-3.5 rounded-2xl bg-white text-[#279e5a] shadow-sm">
+              <Smartphone className="w-7 h-7" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-stone-100 text-base">{profile.phoneNumber}</h3>
-                <span className="text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded font-bold">
+                <h3 className="font-bold text-white text-lg font-mono">{profile.phoneNumber}</h3>
+                <span className="text-[10px] font-mono bg-white/20 text-white px-2.5 py-0.5 rounded-full font-bold">
                   VERIFIED RECIPIENT
                 </span>
               </div>
-              <p className="text-xs text-stone-400 mt-0.5">
+              <p className="text-xs text-white/80 mt-0.5">
                 Primary contact for {profile.fullName} ({profile.farmName})
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-amber-300 bg-stone-950 px-3 py-1.5 rounded-xl border border-stone-800">
-            <Clock className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center gap-2 text-xs text-white bg-white/18 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+            <Clock className="w-4 h-4 text-white" />
             <span>Anti-Spam Cooldown: 2 Hours per issue type</span>
           </div>
         </div>
       </div>
 
       {/* Active System Alerts */}
-      <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-7 shadow-sm space-y-5">
+      <div className="bg-white rounded-[32px] border border-stone-200/80 p-7 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.07)] space-y-5">
         <h2 className="font-bold text-stone-900 text-base sm:text-lg">
           Current Active Farm Advisories
         </h2>
 
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {activeAlerts.map((alt, idx) => {
             const Icon = alt.icon;
             return (
               <div
                 key={idx}
-                className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                className="p-5 rounded-2xl bg-[#f8faf9] border border-stone-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
               >
-                <div className="flex items-start gap-3.5">
-                  <div className={`p-2.5 rounded-xl ${alt.color} shrink-0 mt-0.5`}>
+                <div className="flex items-start gap-4">
+                  <div className={`p-3 rounded-2xl ${alt.color} shrink-0 mt-0.5`}>
                     <Icon className="w-5 h-5" />
                   </div>
                   <div>
@@ -166,8 +163,8 @@ export const AlertsPage: React.FC<Props> = ({
                       <span className="text-xs font-bold text-stone-900">{alt.title}</span>
                       <span className="text-[10px] text-stone-400 font-mono">{alt.time}</span>
                     </div>
-                    <p className="text-xs text-stone-600 mt-0.5 leading-relaxed">{alt.desc}</p>
-                    <div className="text-[11px] font-semibold text-emerald-800 mt-1">
+                    <p className="text-xs text-stone-600 mt-1 leading-relaxed">{alt.desc}</p>
+                    <div className="text-[11px] font-semibold text-[#279e5a] mt-1.5">
                       Action: {alt.action}
                     </div>
                   </div>
@@ -179,7 +176,7 @@ export const AlertsPage: React.FC<Props> = ({
       </div>
 
       {/* Delivered GSM SMS Log Stream */}
-      <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-7 shadow-sm space-y-5">
+      <div className="bg-white rounded-[32px] border border-stone-200/80 p-7 shadow-[0_16px_40px_-10px_rgba(0,0,0,0.07)] space-y-5">
         <div className="flex items-center justify-between">
           <h2 className="font-bold text-stone-900 text-base sm:text-lg">
             Delivered SMS Delivery Records ({logs.length})
@@ -187,15 +184,15 @@ export const AlertsPage: React.FC<Props> = ({
           <span className="text-xs font-mono text-stone-500">Fast2SMS / GSM Gateway Log</span>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {logs.map((log) => (
             <div
               key={log.id}
-              className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-2"
+              className="p-5 rounded-2xl bg-[#f8faf9] border border-stone-200/80 space-y-2.5"
             >
               <div className="flex items-center justify-between text-xs">
-                <span className="font-mono text-emerald-700 font-bold flex items-center gap-1.5">
-                  <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="font-mono text-[#279e5a] font-bold flex items-center gap-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-[#279e5a]" />
                   {log.status === 'delivered' ? 'SMS Delivered to GSM Network' : log.status}
                 </span>
                 <span className="text-stone-400 font-mono text-[11px]">{log.timestamp}</span>
@@ -203,13 +200,13 @@ export const AlertsPage: React.FC<Props> = ({
 
               <div className="text-xs font-bold text-stone-900">{log.title}</div>
 
-              <pre className="text-xs text-stone-700 bg-white p-3 rounded-xl border border-stone-200 font-sans whitespace-pre-wrap leading-relaxed">
+              <pre className="text-xs text-stone-700 bg-white p-3.5 rounded-xl border border-stone-200 font-sans whitespace-pre-wrap leading-relaxed shadow-xs">
                 {log.message}
               </pre>
 
               <div className="flex items-center justify-between text-[11px] text-stone-500 pt-1">
                 <span>Recipient: {log.phone}</span>
-                <span className="bg-stone-200 text-stone-800 px-2 py-0.5 rounded font-mono text-[10px]">
+                <span className="bg-[#eaf7ef] text-[#166436] px-2.5 py-0.5 rounded-full font-mono text-[10px] font-semibold">
                   Category: {log.category}
                 </span>
               </div>
@@ -217,20 +214,20 @@ export const AlertsPage: React.FC<Props> = ({
           ))}
         </div>
 
-        {/* Live Manual SMS Trigger Box */}
-        <div className="p-5 rounded-2xl bg-stone-900 text-stone-200 space-y-3 mt-4">
-          <h3 className="font-bold text-stone-100 text-sm">
+        {/* Live Manual SMS Trigger with High-Contrast Charcoal Button */}
+        <div className="p-6 rounded-[28px] bg-stone-100 border border-stone-200 space-y-3 mt-4">
+          <h3 className="font-bold text-stone-900 text-sm">
             Trigger Immediate Live Test SMS
           </h3>
-          <p className="text-xs text-stone-400">
-            Dispatches through the SMS abstraction layer directly into the farmer log and terminal.
+          <p className="text-xs text-stone-500">
+            Dispatches through the SMS abstraction layer directly into the farmer log.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col sm:flex-row gap-2.5">
             <select
               value={smsCategory}
               onChange={(e) => setSmsCategory(e.target.value as any)}
-              className="bg-stone-800 text-stone-200 text-xs px-3 py-2 rounded-xl border border-stone-700"
+              className="bg-white text-stone-800 text-xs px-3.5 py-2.5 rounded-full border border-stone-300 font-semibold"
             >
               <option value="Soil">Soil Nutrient Alert</option>
               <option value="Weather">Weather Advisory</option>
@@ -243,21 +240,22 @@ export const AlertsPage: React.FC<Props> = ({
               placeholder="Custom alert message or leave empty for template..."
               value={customText}
               onChange={(e) => setCustomText(e.target.value)}
-              className="flex-1 bg-stone-800 text-stone-200 text-xs px-3 py-2 rounded-xl border border-stone-700 focus:outline-none focus:border-emerald-500"
+              className="flex-1 bg-white text-stone-800 text-xs px-4 py-2.5 rounded-full border border-stone-300 focus:outline-none focus:border-[#279e5a]"
             />
 
+            {/* High Contrast Charcoal CTA Button */}
             <button
               onClick={handleDispatch}
               disabled={sending}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-stone-950 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors cursor-pointer shrink-0"
+              className="px-6 py-2.5 bg-[#191c21] hover:bg-black disabled:opacity-50 text-white font-bold text-xs rounded-full flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer shrink-0"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-3.5 h-3.5 text-[#34c775]" />
               <span>{sending ? 'Sending...' : 'Send SMS'}</span>
             </button>
           </div>
 
           {sentMessage && (
-            <div className="text-xs text-emerald-400 flex items-center gap-1.5 font-medium pt-1">
+            <div className="text-xs text-[#279e5a] flex items-center gap-1.5 font-bold pt-1">
               <CheckCircle className="w-4 h-4" />
               <span>SMS dispatched and recorded in delivery stream!</span>
             </div>
