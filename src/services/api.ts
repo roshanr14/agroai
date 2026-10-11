@@ -59,7 +59,10 @@ class AgriSenseApiService {
       const res = await fetch('/api/sensors/current');
       if (res.ok) {
         const data = await res.json();
-        return data.readings || data;
+        const cand = data?.readings || data;
+        if (cand && typeof cand.soil_moisture === 'number') {
+          return cand;
+        }
       }
     } catch (e) {
       console.warn("Using local fallback sensor readings:", e);
@@ -76,7 +79,10 @@ class AgriSenseApiService {
       });
       if (res.ok) {
         const data = await res.json();
-        return data.readings || data;
+        const cand = data?.readings || data;
+        if (cand && typeof cand.soil_moisture === 'number') {
+          return cand;
+        }
       }
     } catch (e) {
       console.warn("Simulation tick fallback:", e);
@@ -97,7 +103,10 @@ class AgriSenseApiService {
       });
       if (res.ok) {
         const data = await res.json();
-        return data.readings || data;
+        const cand = data?.readings || data;
+        if (cand && typeof cand.soil_moisture === 'number') {
+          return cand;
+        }
       }
     } catch (e) {
       console.warn("Preset API fallback:", e);
@@ -135,7 +144,10 @@ class AgriSenseApiService {
       });
       if (res.ok) {
         const data = await res.json();
-        return data.readings || data;
+        const cand = data?.readings || data;
+        if (cand && typeof cand.soil_moisture === 'number') {
+          return cand;
+        }
       }
     } catch (e) {
       console.warn("Override reading fallback:", e);
@@ -182,17 +194,19 @@ class AgriSenseApiService {
       });
       if (res.ok) {
         const data = await res.json();
-        const preds = data.agent_predictions;
-        return {
-          health_score: preds.decision_agent.overall_farm_health_score,
-          actions: preds.decision_agent.today_actions,
-          recommendations: data.recommendations,
-          soilAnalysis: preds.soil_agent,
-          weatherAnalysis: preds.weather_agent,
-          pestAnalysis: preds.pest_agent,
-          irrigationAnalysis: preds.irrigation_agent,
-          traces: data.execution_trace || []
-        };
+        const preds = data?.agent_predictions;
+        if (preds?.decision_agent && preds?.soil_agent && preds?.weather_agent && preds?.pest_agent && preds?.irrigation_agent) {
+          return {
+            health_score: typeof preds.decision_agent.overall_farm_health_score === 'number' ? preds.decision_agent.overall_farm_health_score : 82,
+            actions: Array.isArray(preds.decision_agent.today_actions) ? preds.decision_agent.today_actions : [],
+            recommendations: Array.isArray(data.recommendations) ? data.recommendations : [],
+            soilAnalysis: preds.soil_agent,
+            weatherAnalysis: preds.weather_agent,
+            pestAnalysis: preds.pest_agent,
+            irrigationAnalysis: preds.irrigation_agent,
+            traces: Array.isArray(data.execution_trace) ? data.execution_trace : []
+          };
+        }
       }
     } catch (e) {
       console.warn("Orchestrator fallback:", e);
@@ -385,7 +399,10 @@ class AgriSenseApiService {
     try {
       const res = await fetch('/api/sms/logs');
       if (res.ok) {
-        return await res.json();
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          return data;
+        }
       }
     } catch (e) {
       console.warn("SMS logs fallback:", e);

@@ -24,10 +24,57 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
+      // 1. Direct file:// protocol helper
+      if (window.location.protocol === 'file:') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+            const root = document.getElementById('root');
+            if (root && !root.children.length) {
+              root.innerHTML = `
+                <div style="font-family: system-ui, -apple-system, sans-serif; display: flex; min-height: 100vh; align-items: center; justify-content: center; background: #f5f5f4; padding: 24px;">
+                  <div style="background: white; border-radius: 24px; padding: 32px; max-width: 520px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; border: 1px solid #e7e5e4;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🌱</div>
+                    <h2 style="font-size: 20px; font-weight: 700; color: #1c1917; margin-bottom: 12px;">AgriSense AI Development Server</h2>
+                    <p style="font-size: 14px; color: #57534e; line-height: 1.6; margin-bottom: 20px;">
+                      Modern React and Vite applications must be served over HTTP rather than opened as a local file (<code>file://</code>).
+                    </p>
+                    <div style="background: #eaf7ef; color: #166436; padding: 14px 18px; border-radius: 12px; font-family: monospace; font-size: 13px; text-align: left; margin-bottom: 20px; border: 1px solid #d1edd9;">
+                      <strong>Run in your project terminal:</strong><br/>
+                      npm run dev<br/><br/>
+                      <strong>Then open in your browser:</strong><br/>
+                      <a href="http://localhost:5173" style="color: #279e5a; text-decoration: underline;">http://localhost:5173</a>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }
+          }, 1500);
         });
+      }
+
+      // 2. Service worker management: unregister in dev mode to avoid stale caching, register in production
+      if ('serviceWorker' in navigator) {
+        const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (isLocalDev) {
+          navigator.serviceWorker.getRegistrations().then((registrations) => {
+            for (const registration of registrations) {
+              registration.unregister();
+            }
+          });
+          if ('caches' in window) {
+            caches.keys().then((keys) => {
+              for (const key of keys) {
+                if (key.startsWith('agrisense-')) {
+                  caches.delete(key);
+                }
+              }
+            });
+          }
+        } else if (window.location.protocol === 'https:') {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          });
+        }
       }
     </script>
   </body>
