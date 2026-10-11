@@ -203,6 +203,19 @@ class AgriSenseHandler(BaseHTTPRequestHandler):
             self._set_headers()
             self.wfile.write(json.dumps(res).encode())
 
+        elif path == "/api/auth/send-otp":
+            phone = body.get("phone", "")
+            res = notification_service.generate_otp(phone)
+            self._set_headers(200 if res.get("success") else 400)
+            self.wfile.write(json.dumps(res).encode())
+
+        elif path == "/api/auth/verify-otp":
+            phone = body.get("phone", "")
+            otp = body.get("otp", "")
+            res = notification_service.verify_otp(phone, otp)
+            self._set_headers(200 if res.get("success") else 400)
+            self.wfile.write(json.dumps(res).encode())
+
         else:
             self._set_headers(404)
             self.wfile.write(json.dumps({"error": "Endpoint not found"}).encode())
