@@ -86,6 +86,7 @@ graph TD
     subgraph Delivery_Layer ["Farmer Interaction & Delivery"]
         WEB[React 19 + Vite Dashboard]
         SMS[Autonomous GSM / SMS Gateway]
+        TG[Telegram Bot API Stream - Free & Unlimited]
         VOICE[Voice & Audio Assistant]
     end
 
@@ -96,6 +97,7 @@ graph TD
 
     DECISION -->|Actionable Plan| WEB
     DECISION -->|Priority Threshold Alert| SMS
+    DECISION -->|Instant Free Advisory| TG
     DECISION -->|Multilingual TTS| VOICE
 ```
 

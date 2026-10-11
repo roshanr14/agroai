@@ -275,8 +275,44 @@ class NotificationService:
             "record": record
         }
 
+    def send_telegram(
+        self,
+        chat_id: str,
+        category: str,
+        message: str,
+        title: str = "AgroAI Telegram Alert",
+        bot_token: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """Dispatches an instant crop alert to the farmer's Telegram account."""
+        from backend.services.telegram_service import telegram_service
+        res = telegram_service.send_message(
+            chat_id=chat_id,
+            message=message,
+            category=category,
+            title=title,
+            bot_token=bot_token
+        )
+        if res.get("success"):
+            record = {
+                "id": f"TG-{int(time.time())}-{random.randint(100, 999)}",
+                "phone": f"Chat ID: {chat_id}",
+                "category": category,
+                "channel": "Telegram",
+                "provider": res.get("provider", "Telegram Bot API (Free)"),
+                "status": "delivered",
+                "timestamp": time.strftime("%Y-%m-%d %I:%M %p"),
+                "title": title,
+                "message": message
+            }
+            self.notification_history.insert(0, record)
+            if len(self.notification_history) > 50:
+                self.notification_history.pop()
+            res["record"] = record
+        return res
+
     def get_history(self, limit: int = 25) -> List[Dict[str, Any]]:
         return self.notification_history[:limit]
 
 # Singleton instance for system-wide notifications
 notification_service = NotificationService()
+

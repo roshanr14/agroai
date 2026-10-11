@@ -104,9 +104,18 @@ export const SmsAlertDrawer: React.FC<Props> = ({
               className="bg-[#f8faf9] border border-stone-200 rounded-2xl p-4 space-y-2 shadow-xs"
             >
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-mono text-[#279e5a] font-bold flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-[#279e5a]" />
-                  {log.provider || 'Fast2SMS Gateway'} • Delivered
+                <span className="font-mono font-bold flex items-center gap-1">
+                  {log.channel === 'Telegram' || log.id.startsWith('TG-') ? (
+                    <>
+                      <Send className="w-3 h-3 text-[#0288d1]" />
+                      <span className="text-[#0288d1]">{log.provider || 'Telegram Bot API'} • Delivered</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-3 h-3 text-[#279e5a]" />
+                      <span className="text-[#279e5a]">{log.provider || 'Fast2SMS Gateway'} • Delivered</span>
+                    </>
+                  )}
                 </span>
                 <span className="text-stone-400 font-mono">{log.timestamp}</span>
               </div>

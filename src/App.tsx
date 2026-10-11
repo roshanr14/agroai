@@ -122,6 +122,12 @@ export const App: React.FC = () => {
     setSmsLogs(updatedLogs);
   };
 
+  const handleSendTelegram = async (chatId: string, category: string, msg: string) => {
+    await apiService.sendTelegramAlert(chatId, category, msg, undefined, profile.telegramBotToken);
+    const updatedLogs = await apiService.getSmsLogs();
+    setSmsLogs(updatedLogs);
+  };
+
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
     triggerOrchestrator(profile, lang);
@@ -327,6 +333,8 @@ export const App: React.FC = () => {
                   profile={profile}
                   readings={readings}
                   onSendSms={handleSendTestSms}
+                  onSendTelegram={handleSendTelegram}
+                  onUpdateProfile={handleUpdateProfile}
                 />
               }
             />

@@ -18,6 +18,10 @@ export interface FarmerProfile {
   irrigationMethod: string;
   notificationsEnabled: boolean;
   smsAlertsEnabled: boolean;
+  telegramChatId?: string;
+  telegramUsername?: string;
+  telegramAlertsEnabled?: boolean;
+  telegramBotToken?: string;
 }
 
 export interface SensorReadings {

@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from backend.services.sensor_simulator import AgriculturalSensorSimulator
 from backend.services.notification_service import notification_service
+from backend.services.telegram_service import telegram_service
 from backend.orchestrator import orchestrator
 from backend.knowledge_base.agricultural_rag import AgriculturalKnowledgeRAG
 
@@ -73,6 +74,10 @@ class AgriSenseHandler(BaseHTTPRequestHandler):
         elif path == "/api/sms/logs":
             self._set_headers()
             self.wfile.write(json.dumps(notification_service.get_history()).encode())
+
+        elif path == "/api/telegram/status":
+            self._set_headers()
+            self.wfile.write(json.dumps(telegram_service.get_status()).encode())
 
         elif path == "/api/orchestrator/latest":
             self._set_headers()
@@ -214,6 +219,31 @@ class AgriSenseHandler(BaseHTTPRequestHandler):
             otp = body.get("otp", "")
             res = notification_service.verify_otp(phone, otp)
             self._set_headers(200 if res.get("success") else 400)
+            self.wfile.write(json.dumps(res).encode())
+
+        elif path == "/api/telegram/send":
+            chat_id = body.get("chat_id", "")
+            category = body.get("category", "General")
+            message = body.get("message", "AgroAI Farm Status: All systems healthy.")
+            title = body.get("title", "AgroAI Telegram Advisory")
+            bot_token = body.get("bot_token")
+
+            res = notification_service.send_telegram(
+                chat_id=chat_id,
+                category=category,
+                message=message,
+                title=title,
+                bot_token=bot_token
+            )
+            self._set_headers()
+            self.wfile.write(json.dumps(res).encode())
+
+        elif path == "/api/telegram/connect":
+            bot_token = body.get("bot_token", "")
+            chat_id = body.get("chat_id", "")
+            telegram_service.set_credentials(bot_token, chat_id)
+            res = telegram_service.get_status()
+            self._set_headers()
             self.wfile.write(json.dumps(res).encode())
 
         else:

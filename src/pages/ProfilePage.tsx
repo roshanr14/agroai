@@ -14,11 +14,13 @@ import {
   Radio,
   Flame,
   CloudRain,
-  Bug
+  Bug,
+  Bot
 } from 'lucide-react';
 import { Language, FarmerProfile } from '../types';
 import { getTranslation } from '../lib/i18n';
 import { apiService } from '../services/api';
+import { TelegramConnectModal } from '../components/TelegramConnectModal';
 
 interface Props {
   language: Language;
@@ -34,6 +36,9 @@ export const ProfilePage: React.FC<Props> = ({
   const t = getTranslation(language);
   const [formData, setFormData] = useState<FarmerProfile>({ ...profile });
   const [savedSuccess, setSavedSuccess] = useState(false);
+
+  // Telegram Modal State
+  const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false);
 
   // OTP Verification State
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
@@ -297,6 +302,49 @@ export const ProfilePage: React.FC<Props> = ({
                 />
               </div>
             </div>
+          </div>
+
+          {/* TELEGRAM BOT CHANNEL INTEGRATION */}
+          <div className="pt-3 border-t border-stone-100 bg-[#f0f9ff] p-5 rounded-2xl border border-[#b9e6fe] space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-[#0288d1] text-white">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-stone-900">Telegram Bot Channel</span>
+                    <span className="text-[10px] font-mono bg-[#0288d1]/10 text-[#0288d1] px-2 py-0.5 rounded-full font-bold">
+                      100% Free & Unlimited
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-stone-600 mt-0.5">
+                    {formData.telegramChatId 
+                      ? `Connected to Chat ID: ${formData.telegramChatId}`
+                      : "Zero carrier cost alerts delivered straight to your Telegram account."}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsTelegramModalOpen(true)}
+                className="px-4 py-2 rounded-xl bg-[#0288d1] hover:bg-[#0277bd] text-white text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-xs"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>{formData.telegramChatId ? "Configure Telegram" : "Connect Telegram"}</span>
+              </button>
+            </div>
+
+            <label className="flex items-center gap-2.5 text-xs text-stone-700 cursor-pointer pt-1 border-t border-[#b9e6fe]/50">
+              <input
+                type="checkbox"
+                checked={Boolean(formData.telegramAlertsEnabled)}
+                onChange={(e) => setFormData({ ...formData, telegramAlertsEnabled: e.target.checked })}
+                className="rounded text-[#0288d1] focus:ring-[#0288d1]"
+              />
+              <span className="font-medium">Deliver critical irrigation and nutrient alerts to Telegram</span>
+            </label>
           </div>
 
           {/* SMS ALERT CATEGORY PREFERENCES */}
@@ -615,6 +663,17 @@ export const ProfilePage: React.FC<Props> = ({
           </div>
         </div>
       )}
+
+      {/* Telegram Connect Modal */}
+      <TelegramConnectModal
+        isOpen={isTelegramModalOpen}
+        onClose={() => setIsTelegramModalOpen(false)}
+        profile={formData}
+        onUpdateProfile={(updated) => {
+          setFormData(updated);
+          onUpdateProfile(updated);
+        }}
+      />
     </div>
   );
 };
